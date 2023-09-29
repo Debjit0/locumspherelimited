@@ -4,7 +4,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:locumspherelimited/LoginScreen/login.dart';
 import 'package:locumspherelimited/Signup%20Screen/signup.dart';
+import 'package:locumspherelimited/View%20Models/auth_provider.dart';
+import 'package:locumspherelimited/check%20if%20phone%20exists/check_phone.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class OTP extends StatefulWidget {
   const OTP({Key? key}) : super(key: key);
@@ -14,10 +17,12 @@ class OTP extends StatefulWidget {
 }
 
 class _OTPState extends State<OTP> {
+  
   final FirebaseAuth auth = FirebaseAuth.instance;
   var code = "";
   @override
   Widget build(BuildContext context) {
+    var _authProvider = Provider.of<AuthProvider>(context);
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
@@ -106,7 +111,7 @@ class _OTPState extends State<OTP> {
 
                             // Sign the user in (or link) with the credential
                             await auth.signInWithCredential(credential);
-                            Get.offAll(() => SignupScreen());
+                            Get.offAll(() => CheckPhone(phone: _authProvider.phoneNumber,));
                           } catch (e) {
                             //print('verify error');
                             print(e);

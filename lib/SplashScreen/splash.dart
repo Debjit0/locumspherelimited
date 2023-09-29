@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:locumspherelimited/Home%20Screen/home.dart';
 import 'package:locumspherelimited/LoginScreen/login.dart';
+import 'package:locumspherelimited/check%20verification/check_verification.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (auth.currentUser == null) {
         Get.offAll(LoginScreen());
       } else {
-        Get.offAll(HomeScreen());
+        Get.offAll(CheckVerify());
       }
     });
 
