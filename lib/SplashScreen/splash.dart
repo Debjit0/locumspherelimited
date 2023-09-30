@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:locumspherelimited/Home%20Screen/home.dart';
+
 import 'package:locumspherelimited/LoginScreen/login.dart';
 import 'package:locumspherelimited/check%20verification/check_verification.dart';
 

@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:locumspherelimited/Signup%20Screen/signup.dart';
+
 import 'package:locumspherelimited/SplashScreen/splash.dart';
 import 'package:locumspherelimited/View%20Models/auth_provider.dart';
 import 'package:locumspherelimited/firebase_options.dart';

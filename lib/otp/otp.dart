@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:locumspherelimited/LoginScreen/login.dart';
-import 'package:locumspherelimited/Signup%20Screen/signup.dart';
+
 import 'package:locumspherelimited/View%20Models/auth_provider.dart';
 import 'package:locumspherelimited/check%20if%20phone%20exists/check_phone.dart';
 import 'package:pinput/pinput.dart';
@@ -46,6 +46,7 @@ class _OTPState extends State<OTP> {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
+    // ignore: unused_local_variable
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(

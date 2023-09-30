@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:locumspherelimited/Home%20Screen/home.dart';
+
 import 'package:locumspherelimited/Signup%20Screen/signup.dart';
-import 'package:locumspherelimited/View%20Models/auth_provider.dart';
+
 import 'package:locumspherelimited/check%20verification/check_verification.dart';
 
+// ignore: must_be_immutable
 class CheckPhone extends StatefulWidget {
   CheckPhone({super.key, required String this.phone});
   String phone;

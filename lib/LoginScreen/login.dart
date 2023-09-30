@@ -23,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return GestureDetector(
@@ -86,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       fontWeight: FontWeight.bold),
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
+                                  // ignore: body_might_complete_normally_nullable
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Please enter a phone number';
