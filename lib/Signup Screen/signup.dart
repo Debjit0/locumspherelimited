@@ -63,18 +63,12 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text.rich(
-                    textAlign: TextAlign.center,
-                    TextSpan(
-                      text: 'Register'.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 2,
-                        color: Theme.of(context).colorScheme.secondaryContainer,
-                      ),
-                    ),
-                  ),
+                  Text("Sign Up.", style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 56.0,
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.bold,
+                  ),),
                   const SizedBox(
                     height: 56,
                   ),

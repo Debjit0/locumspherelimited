@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             icon: Icon(Icons.exit_to_app))
       ]),
+      body: Center(child: Text("Home Page"),),
     );
   }
 }
