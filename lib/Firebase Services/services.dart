@@ -13,6 +13,7 @@ class Services {
   Future addInitialDetails(String firstname, String lastname, String email,
       String gender, String shiftPreference, String phoneNumber) async {
     final data = {
+      'uid' : uid,
       'firstname': firstname,
       'lastname': lastname,
       'email': email,
