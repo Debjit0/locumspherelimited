@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +33,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   bool isLoading = false;
 
+  DateTime selectedDate = DateTime.now();
   @override
   void didChangeDependencies() {
     if (isInit) {
@@ -63,12 +62,15 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Sign Up.", style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 56.0,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold,
-                  ),),
+                  Text(
+                    "Sign Up.",
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 56.0,
+                      color: Colors.deepPurple,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(
                     height: 56,
                   ),
@@ -126,6 +128,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                           getLabel: (String value) => value,
                         ),
+                        ElevatedButton(
+              onPressed: () => _selectDate(context),
+              child: const Text('Select date'),
+            ),
                       ],
                     ),
                   ),
@@ -188,5 +194,19 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
   }
 }
