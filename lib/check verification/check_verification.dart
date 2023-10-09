@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:locumspherelimited/Home%20Screen/home.dart';
+import 'package:locumspherelimited/Navbar/navbar.dart';
 import 'package:locumspherelimited/LoginScreen/login.dart';
 
 class CheckVerify extends StatefulWidget {
@@ -57,7 +57,7 @@ class _CheckVerifyState extends State<CheckVerify> {
               ),
             ),
           ))
-        : HomeScreen();
+        : NavBar();
   }
 
   Future<bool> getVerificationStatus() async {
