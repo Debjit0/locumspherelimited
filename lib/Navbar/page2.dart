@@ -10,6 +10,10 @@ class Page2 extends StatefulWidget {
 class _Page2State extends State<Page2> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Image.asset("assets/images/1.png")
+      ),
+    );
   }
 }
