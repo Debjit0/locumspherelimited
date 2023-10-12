@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -22,6 +20,7 @@ class Services {
       'phonenumber':phoneNumber,
       'isverified':false,
       'accounttype':'employee',
+      'assigneddates':[]
     };
     CollectionReference userCollection = _firestore.collection("Users");
 

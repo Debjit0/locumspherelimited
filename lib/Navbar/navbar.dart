@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:locumspherelimited/Allocation%20Screen/allocation_screen.dart';
 import 'package:locumspherelimited/Home%20Screen/home_screen.dart';
 import 'package:locumspherelimited/Navbar/page2.dart';
 import 'package:locumspherelimited/Navbar/page3.dart';
@@ -18,8 +19,8 @@ class _NavBarState extends State<NavBar> {
     return Scaffold(
         body: const [
           HomeScreen(),
+          AllocationsSccreen(),
           Page2(),
-          Page3(),
         ][selectedPageIndex],
         bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
@@ -33,6 +34,11 @@ class _NavBarState extends State<NavBar> {
             NavigationDestination(
               selectedIcon: Icon(Icons.home),
               icon: Icon(Icons.home_outlined),
+              label: 'Dashboard',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.calendar_month),
+              icon: Icon(Icons.calendar_month_outlined),
               label: 'Allocation',
             ),
             NavigationDestination(
@@ -40,11 +46,7 @@ class _NavBarState extends State<NavBar> {
               icon: Icon(Icons.group_outlined),
               label: 'Employees',
             ),
-            NavigationDestination(
-              selectedIcon: Icon(Icons.history_rounded),
-              icon: Icon(Icons.history_outlined),
-              label: 'History',
-            ),
+            
           ],
         ),
       
