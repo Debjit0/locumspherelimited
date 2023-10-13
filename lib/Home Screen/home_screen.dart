@@ -238,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
         checkin = snap2["checkin"];
       }
       if (snap2['checkout'] != "") {
-        checkout = snap2['checkout'];
+        checkout = snap2['checkout'];   
       }
       hasWork = true;
       isLoading = false;
