@@ -1,15 +1,87 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:intl/intl.dart';
+import 'package:locumspherelimited/chat/all_chat.dart';
+import 'package:locumspherelimited/chat/chat_screen.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class Dashboard extends StatefulWidget {
+  const Dashboard({super.key});
 
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  DateTime date =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  CollectionReference UserCollection =
+      FirebaseFirestore.instance.collection('Users');
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Dashboard"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(AllChat());
+              },
+              icon: Icon(Icons.message_outlined)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.person))
+        ],
+      ),
+      body: StreamBuilder(
+        stream: UserCollection.doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection("Allocations")
+            .where("date", isEqualTo: date.toString())
+            .snapshots(),
+        builder: (context, snapshot) {
+          //print(date);
+
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+          return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                print(snapshot.data!.docs.length);
+                return GestureDetector(
+                  onTap: () {
+                    Get.to(HomeScreen(index: index));
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(14),
+                    padding: EdgeInsets.all(14),
+                    decoration: BoxDecoration(color: Colors.lightGreen),
+                    child: Column(
+                      children: [
+                        Text((index + 1).toString()),
+                        Text(snapshot.data!.docs[index]['date']),
+                        Text(snapshot.data!.docs[index]['unitname']),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        },
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class HomeScreen extends StatefulWidget {
+  HomeScreen({super.key, required this.index});
+  int index;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -131,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           isEqualTo: dateRequest.toString())
                                       .get();
 
-                                  print(snap.docs[0].id);
+                                  print(snap.docs[widget.index].id);
 
                                   DocumentSnapshot snap2 =
                                       await FirebaseFirestore.instance
@@ -139,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .doc(FirebaseAuth
                                               .instance.currentUser!.uid)
                                           .collection("Allocations")
-                                          .doc(snap.docs[0].id)
+                                          .doc(snap.docs[widget.index].id)
                                           .get();
 
                                   if (snap2['checkin'] != "") {
@@ -148,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .doc(FirebaseAuth
                                             .instance.currentUser!.uid)
                                         .collection("Allocations")
-                                        .doc(snap.docs[0].id)
+                                        .doc(snap.docs[widget.index].id)
                                         .update({
                                       'checkout': DateFormat("hh:mm")
                                           .format(DateTime.now())
@@ -172,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .doc(FirebaseAuth
                                             .instance.currentUser!.uid)
                                         .collection("Allocations")
-                                        .doc(snap.docs[0].id)
+                                        .doc(snap.docs[widget.index].id)
                                         .update({
                                       'checkin': DateFormat("hh:mm")
                                           .format(DateTime.now())
@@ -215,10 +287,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
       final List<DocumentSnapshot> documents = snapshot.docs;
 
-      dateRequest = documents[0]['date'];
-      unitId = documents[0]['unitid'];
-      unitName = documents[0]['unitname'];
-      allocationId = documents[0].id;
+      dateRequest = documents[widget.index]['date'];
+      unitId = documents[widget.index]['unitid'];
+      unitName = documents[widget.index]['unitname'];
+      allocationId = documents[widget.index].id;
 
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection("Users")
@@ -231,14 +303,14 @@ class _HomeScreenState extends State<HomeScreen> {
           .collection("Users")
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection("Allocations")
-          .doc(snap.docs[0].id)
+          .doc(snap.docs[widget.index].id)
           .get();
 
       if (snap2['checkin'] != "") {
         checkin = snap2["checkin"];
       }
       if (snap2['checkout'] != "") {
-        checkout = snap2['checkout'];   
+        checkout = snap2['checkout'];
       }
       hasWork = true;
       isLoading = false;

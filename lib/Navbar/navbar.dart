@@ -18,7 +18,7 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: const [
-          HomeScreen(),
+          Dashboard(),
           AllocationsSccreen(),
           Page2(),
         ][selectedPageIndex],
