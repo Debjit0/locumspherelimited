@@ -53,7 +53,7 @@ class _MessageTileState extends State<MessageTile> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                /*Text(
                   widget.sender.toUpperCase(),
                   textAlign: TextAlign.start,
                   style: const TextStyle(
@@ -61,7 +61,7 @@ class _MessageTileState extends State<MessageTile> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       letterSpacing: -0.5),
-                ),
+                ),*/
                 const SizedBox(
                   height: 8,
                 ),

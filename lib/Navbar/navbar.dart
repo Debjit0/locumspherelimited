@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:locumspherelimited/Allocation%20Screen/allocation_screen.dart';
 import 'package:locumspherelimited/Home%20Screen/home_screen.dart';
 import 'package:locumspherelimited/Navbar/page2.dart';
-import 'package:locumspherelimited/Navbar/page3.dart';
+//import 'package:locumspherelimited/Navbar/page3.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});

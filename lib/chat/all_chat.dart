@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -14,6 +15,8 @@ class AllChat extends StatefulWidget {
 class _AllChatState extends State<AllChat> {
   CollectionReference ChatCollection =
       FirebaseFirestore.instance.collection('Chats');
+
+  final uid = FirebaseAuth.instance.currentUser!.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,8 @@ class _AllChatState extends State<AllChat> {
         title: Text("All Chats"),
       ),
       body: StreamBuilder(
-        stream: ChatCollection.snapshots(),
+        stream: ChatCollection.where("participants", arrayContains: uid)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -37,11 +41,24 @@ class _AllChatState extends State<AllChat> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.all(14),
-                padding: EdgeInsets.all(14),
-                decoration: BoxDecoration(color: Colors.lightGreen),
-                child: Text(snapshot.data!.docs[index]['lastmsg']),
+              return GestureDetector(
+                onTap: () async {
+                  String name = "";
+                  List participants =
+                      await snapshot.data!.docs[index]["participants"];
+                  for (int i = 0; i < 2; i++) {
+                    if (participants[i] != uid) {
+                      name = participants[i];
+                    }
+                  }
+                  Get.to(ChatScreen(name: name));
+                },
+                child: Container(
+                  margin: EdgeInsets.all(14),
+                  padding: EdgeInsets.all(14),
+                  decoration: BoxDecoration(color: Colors.lightGreen),
+                  child: Text(snapshot.data!.docs[index]['recentmessage']),
+                ),
               );
             },
           );
@@ -58,7 +75,9 @@ class _AllChatState extends State<AllChat> {
                       leading: Icon(Icons.person),
                       title: Text("Admin"),
                       onTap: () {
-                        Get.to(ChatScreen());
+                        Get.to(ChatScreen(
+                          name: "Admin",
+                        ));
                       },
                     )
                   ],

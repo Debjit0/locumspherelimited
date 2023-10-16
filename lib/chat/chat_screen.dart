@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:locumspherelimited/Firebase%20Services/services.dart';
 import 'package:locumspherelimited/chat/components/message_tile.dart';
 
+// ignore: must_be_immutable
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
-
+  ChatScreen({super.key, required this.name});
+  String name;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -30,7 +32,7 @@ class _ChatScreenState extends State<ChatScreen> {
         "time": DateTime.now().millisecondsSinceEpoch,
       };
 
-      //DatabaseProvider().sendMessage(widget.groupId, chatMessageMap);
+      Services().sendMessage(chatMessageMap, widget.name);
       setState(() {
         messageController.clear();
       });
@@ -40,8 +42,9 @@ class _ChatScreenState extends State<ChatScreen> {
   getChat() {
     chats = FirebaseFirestore.instance
         .collection("Chats")
-        .doc("Admin_${uid}")
+        .doc("${widget.name}_${uid}")
         .collection("Messages")
+        .orderBy('time')
         .snapshots();
   }
 
@@ -49,7 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Chat"),
+        title: Text(widget.name),
       ),
       body: Stack(children: [
         chatMessages(),
@@ -119,11 +122,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
         return snapshot.hasData
             ? ListView.builder(
+                //reverse: true,
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return MessageTile(
                       message: snapshot.data.docs[index]['message'],
-                      sender: snapshot.data.docs[index]['sender'],
+                      sender: 'You',
                       sentByMe: FirebaseAuth.instance.currentUser!.uid ==
                           snapshot.data.docs[index]['sender']);
                 },
