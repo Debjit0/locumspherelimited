@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:intl/intl.dart';
+import 'package:locumspherelimited/SplashScreen/splash.dart';
 import 'package:locumspherelimited/chat/all_chat.dart';
 //import 'package:locumspherelimited/chat/chat_screen.dart';
 import 'package:slide_to_act/slide_to_act.dart';
@@ -29,10 +33,17 @@ class _DashboardState extends State<Dashboard> {
         actions: [
           IconButton(
               onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Get.to(SplashScreen());
+              },
+              icon: Icon(Icons.exit_to_app)),
+          IconButton(
+              onPressed: () {
                 Get.to(AllChat());
               },
               icon: Icon(Icons.message_outlined)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.person))
+          IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+          
         ],
       ),
       body: StreamBuilder(
@@ -50,28 +61,46 @@ class _DashboardState extends State<Dashboard> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
-          return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                print(snapshot.data!.docs.length);
-                return GestureDetector(
-                  onTap: () {
-                    Get.to(HomeScreen(index: index));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(14),
-                    padding: EdgeInsets.all(14),
-                    decoration: BoxDecoration(color: Colors.lightGreen),
-                    child: Column(
-                      children: [
-                        Text((index + 1).toString()),
-                        Text(snapshot.data!.docs[index]['date']),
-                        Text(snapshot.data!.docs[index]['unitname']),
-                      ],
+          if (snapshot.data!.docs.length != 0) {
+            return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(HomeScreen(index: index));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(14),
+                      padding: EdgeInsets.all(14),
+                      decoration: BoxDecoration(color: Colors.lightGreen),
+                      child: Column(
+                        children: [
+                          Text((index + 1).toString()),
+                          Text(snapshot.data!.docs[index]['date']),
+                          Text(snapshot.data!.docs[index]['unitname']),
+                        ],
+                      ),
                     ),
+                  );
+                });
+          } else {
+            return Container(
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/images/not_found.svg",
+                    height: 200,
                   ),
-                );
-              });
+                  Text(
+                    "No Tasks Allocated Today",
+                  )
+                ],
+              ),
+            );
+          }
         },
       ),
     );

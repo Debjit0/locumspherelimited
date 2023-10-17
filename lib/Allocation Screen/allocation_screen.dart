@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:locumspherelimited/Allocation%20Screen/components/allocation_tile.dart';
@@ -24,34 +25,6 @@ class _AllocationsSccreenState extends State<AllocationsSccreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Allocations"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Get.to(SplashScreen());
-              },
-              icon: Icon(Icons.exit_to_app)),
-          InkWell(
-            onTap: () {
-              Get.to(ProfileScreen());
-            },
-            child: Container(
-              height: 40,
-              width: 40,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Color.fromARGB(255, 236, 236, 236)),
-              child: Center(
-                  child: Icon(
-                Icons.person,
-                color: Colors.deepPurple,
-              )),
-            ),
-          ),
-          SizedBox(
-            width: 14,
-          )
-        ],
       ),
       body: StreamBuilder(
           stream: userCollection.doc(uid).collection("Allocations").snapshots(),
@@ -64,21 +37,40 @@ class _AllocationsSccreenState extends State<AllocationsSccreen> {
               return Text("Loading");
             }
 
-            return ListView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {},
-                  child: AllocationTile(
-                    allocation: Allocation(
-                        date:
-                            DateTime.parse(snapshot.data!.docs[index]['date']),
-                        unitName: snapshot.data!.docs[index]['unitname'],
-                        unitLocation: snapshot.data!.docs[index]['date']),
-                  ),
-                );
-              },
-            );
+            if (snapshot.data!.docs.length != 0) {
+              return Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/images/not_found.svg",
+                      height: 200,
+                    ),
+                    Text(
+                      "No Tasks Allocated Today",
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: AllocationTile(
+                      allocation: Allocation(
+                          date: DateTime.parse(
+                              snapshot.data!.docs[index]['date']),
+                          unitName: snapshot.data!.docs[index]['unitname'],
+                          unitLocation: snapshot.data!.docs[index]['date']),
+                    ),
+                  );
+                },
+              );
+            }
           }),
     );
   }
