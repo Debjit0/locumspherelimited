@@ -15,6 +15,8 @@ class AllChat extends StatefulWidget {
 class _AllChatState extends State<AllChat> {
   CollectionReference ChatCollection =
       FirebaseFirestore.instance.collection('Chats');
+  CollectionReference unitCollection =
+      FirebaseFirestore.instance.collection('Units');
 
   final uid = FirebaseAuth.instance.currentUser!.uid;
   @override
@@ -79,7 +81,47 @@ class _AllChatState extends State<AllChat> {
                           name: "Admin",
                         ));
                       },
-                    )
+                    ),
+                    StreamBuilder(
+                        stream: unitCollection.snapshots(),
+                        builder: (context, snapshot) {
+                          //List<DropdownMenuItem> unitItems = [];
+                          if (snapshot.hasError) {
+                            return Text('Something went wrong');
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          return ListView.builder(
+                              reverse: true,
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Icon(Icons.work),
+                                  title: Text(
+                                      snapshot.data!.docs[index]['unitname']),
+                                  onTap: () {
+                                    print(
+                                        snapshot.data!.docs[index]['unitname']);
+                                    Get.to(ChatScreen(
+                                      name: snapshot.data!.docs[index]['unitname'],
+                                    ));
+                                  },
+                                );
+                              });
+                        }),
                   ],
                 );
               });

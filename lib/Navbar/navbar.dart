@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:locumspherelimited/Allocation%20Screen/allocation_screen.dart';
 import 'package:locumspherelimited/Home%20Screen/home_screen.dart';
 import 'package:locumspherelimited/Navbar/page2.dart';
+import 'package:locumspherelimited/chat/all_chat.dart';
 //import 'package:locumspherelimited/Navbar/page3.dart';
 
 class NavBar extends StatefulWidget {
@@ -21,6 +22,7 @@ class _NavBarState extends State<NavBar> {
           Dashboard(),
           AllocationsSccreen(),
           Page2(),
+          AllChat(),
         ][selectedPageIndex],
         bottomNavigationBar: NavigationBar(
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
@@ -45,6 +47,11 @@ class _NavBarState extends State<NavBar> {
               selectedIcon: Icon(Icons.group),
               icon: Icon(Icons.group_outlined),
               label: 'Employees',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.chat),
+              icon: Icon(Icons.chat_outlined),
+              label: 'Chat',
             ),
             
           ],
