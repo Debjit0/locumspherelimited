@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +9,7 @@ import 'package:locumspherelimited/Signup%20Screen/components/text_form_field.da
 import 'package:locumspherelimited/View%20Models/auth_provider.dart';
 import 'package:locumspherelimited/check%20verification/check_verification.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -63,12 +62,15 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Sign Up.", style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 56.0,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold,
-                  ),),
+                  Text(
+                    "Sign Up.",
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 56.0,
+                      color: Colors.deepPurple,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(
                     height: 56,
                   ),
@@ -148,6 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               } else {
                                 isLoading = true;
                                 setState(() {});
+                                await setNameSF();
                                 Services()
                                     .addInitialDetails(
                                   _firstNameController.text,
@@ -188,5 +191,14 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
       ),
     );
+  }
+
+
+  setNameSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(_firstNameController);
+    if (_firstNameController.text != "") {
+      prefs.setString('firstname', _firstNameController.text);
+    } 
   }
 }

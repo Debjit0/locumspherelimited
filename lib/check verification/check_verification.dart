@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:locumspherelimited/Navbar/navbar.dart';
 import 'package:locumspherelimited/LoginScreen/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CheckVerify extends StatefulWidget {
   const CheckVerify({super.key});
@@ -17,11 +18,13 @@ class _CheckVerifyState extends State<CheckVerify> {
   bool conditions = false;
   bool isVerified = false;
   String accounttype = "";
-
+  String firstname = "";
   void initState() {
     // TODO: implement initState
     //super.initState();
-
+    getNameStatus().then(
+      (value) => value = firstname,
+    );
     getVerificationStatus().then((value) => setState(
           () {},
         ));
@@ -48,6 +51,11 @@ class _CheckVerifyState extends State<CheckVerify> {
                       child: Text("Logout")),
                   ElevatedButton(
                       onPressed: () {
+                        getNameStatus().then(
+                          (value) {
+                            firstname = value;
+                          },
+                        );
                         getVerificationStatus().then((value) => setState(
                               () {},
                             ));
@@ -67,12 +75,17 @@ class _CheckVerifyState extends State<CheckVerify> {
         .get();
     isVerified = document['isverified'];
     accounttype = document["accounttype"];
-    if (isVerified == true && accounttype == "employee") {
+    if (isVerified == true && accounttype == "employee" && firstname != "") {
       conditions = true;
       return true;
     } else {
       conditions = false;
       return false;
     }
+  }
+
+  Future<String> getNameStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("firstname").toString();
   }
 }

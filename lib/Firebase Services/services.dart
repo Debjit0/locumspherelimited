@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Services {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -37,6 +38,9 @@ class Services {
         .update({
       "participants": [uid, "Admin"]
     });*/
+    String firstname = "";
+    getNameStatus().then((value) => firstname = value);
+
     await FirebaseFirestore.instance
         .collection("Chats")
         .doc("${name}_${FirebaseAuth.instance.currentUser!.uid}")
@@ -47,9 +51,14 @@ class Services {
         .doc("Admin_${FirebaseAuth.instance.currentUser!.uid}")
         .set({
       "recentmessage": chatMessageData['message'],
-      "recentmessagesender": chatMessageData['sender'],
+      "recentmessagesender": "${firstname}_${chatMessageData['sender']}",
       "recentmessagetime": chatMessageData['time'].toString(),
-      "participants": [name, uid]
+      "participants": [name, "${firstname}_$uid"]
     });
+  }
+
+  Future<String> getNameStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("firstname").toString();
   }
 }
