@@ -6,8 +6,9 @@ import 'package:locumspherelimited/chat/components/message_tile.dart';
 
 // ignore: must_be_immutable
 class ChatScreen extends StatefulWidget {
-  ChatScreen({super.key, required this.name});
+  ChatScreen({super.key, required this.name, required this.senderName});
   String name;
+  String senderName;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -16,7 +17,7 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController messageController = TextEditingController();
   Stream<QuerySnapshot>? chats;
   final uid = FirebaseAuth.instance.currentUser!.uid;
-
+  String senderName = "";
   @override
   void initState() {
     // TODO: implement initState
@@ -32,7 +33,11 @@ class _ChatScreenState extends State<ChatScreen> {
         "time": DateTime.now().millisecondsSinceEpoch,
       };
 
-      Services().sendMessage(chatMessageMap, widget.name);
+      Services().sendMessage(
+        chatMessageMap,
+        widget.name,
+        widget.senderName,
+      );
       setState(() {
         messageController.clear();
       });
@@ -136,6 +141,4 @@ class _ChatScreenState extends State<ChatScreen> {
       },
     );
   }
-
-  
 }

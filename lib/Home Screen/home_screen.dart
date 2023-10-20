@@ -1,4 +1,4 @@
-import 'dart:math';
+//import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -37,11 +37,7 @@ class _DashboardState extends State<Dashboard> {
                 Get.to(SplashScreen());
               },
               icon: Icon(Icons.exit_to_app)),
-          IconButton(
-              onPressed: () {
-                Get.to(AllChat());
-              },
-              icon: Icon(Icons.message_outlined)),
+          
           IconButton(onPressed: () {}, icon: Icon(Icons.person)),
           
         ],

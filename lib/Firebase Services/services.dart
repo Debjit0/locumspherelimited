@@ -31,7 +31,7 @@ class Services {
     }
   }
 
-  Future sendMessage(Map<String, dynamic> chatMessageData, String name) async {
+  Future sendMessage(Map<String, dynamic> chatMessageData, String name, String senderName) async {
     /*await FirebaseFirestore.instance
         .collection("Chats")
         .doc("Admin_${FirebaseAuth.instance.currentUser!.uid}")
