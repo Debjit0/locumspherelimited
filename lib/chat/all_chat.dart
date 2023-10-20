@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:locumspherelimited/Firebase%20Services/services.dart';
+
 import 'package:locumspherelimited/chat/chat_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

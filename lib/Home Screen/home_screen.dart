@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:intl/intl.dart';
 import 'package:locumspherelimited/SplashScreen/splash.dart';
-import 'package:locumspherelimited/chat/all_chat.dart';
+//import 'package:locumspherelimited/chat/all_chat.dart';
 //import 'package:locumspherelimited/chat/chat_screen.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
