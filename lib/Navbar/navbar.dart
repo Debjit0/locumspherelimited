@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:locumspherelimited/Allocation%20Screen/allocation_screen.dart';
 import 'package:locumspherelimited/Home%20Screen/home_screen.dart';
-import 'package:locumspherelimited/Navbar/page2.dart';
+//import 'package:locumspherelimited/Navbar/page2.dart';
 import 'package:locumspherelimited/chat/all_chat.dart';
 //import 'package:locumspherelimited/Navbar/page3.dart';
 
@@ -21,7 +21,7 @@ class _NavBarState extends State<NavBar> {
         body: const [
           Dashboard(),
           AllocationsSccreen(),
-          Page2(),
+          //Page2(),
           AllChat(),
         ][selectedPageIndex],
         bottomNavigationBar: NavigationBar(
@@ -43,11 +43,11 @@ class _NavBarState extends State<NavBar> {
               icon: Icon(Icons.calendar_month_outlined),
               label: 'Allocation',
             ),
-            NavigationDestination(
+            /*NavigationDestination(
               selectedIcon: Icon(Icons.group),
               icon: Icon(Icons.group_outlined),
               label: 'Employees',
-            ),
+            ),*/
             NavigationDestination(
               selectedIcon: Icon(Icons.chat),
               icon: Icon(Icons.chat_outlined),

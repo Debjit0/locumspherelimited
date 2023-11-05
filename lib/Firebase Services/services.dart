@@ -31,7 +31,8 @@ class Services {
     }
   }
 
-  Future sendMessage(Map<String, dynamic> chatMessageData, String name, String senderName) async {
+  Future sendMessage(Map<String, dynamic> chatMessageData, String name,
+      String senderName) async {
     /*await FirebaseFirestore.instance
         .collection("Chats")
         .doc("Admin_${FirebaseAuth.instance.currentUser!.uid}")
@@ -40,7 +41,8 @@ class Services {
     });*/
     String firstname = "";
     getNameStatus().then((value) => firstname = value);
-
+    print(name);
+    print(senderName);
     await FirebaseFirestore.instance
         .collection("Chats")
         .doc("${name}_${FirebaseAuth.instance.currentUser!.uid}")
@@ -48,7 +50,7 @@ class Services {
         .add(chatMessageData);
     await FirebaseFirestore.instance
         .collection("Chats")
-        .doc("Admin_${FirebaseAuth.instance.currentUser!.uid}")
+        .doc("${name}_${FirebaseAuth.instance.currentUser!.uid}")
         .set({
       "recentmessage": chatMessageData['message'],
       "recentmessagesender": "${firstname}_${chatMessageData['sender']}",

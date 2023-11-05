@@ -88,7 +88,7 @@ class _OTPState extends State<OTP> {
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 56.0,
-                        color: Colors.deepPurple,
+                        color: Color.fromRGBO(3, 201, 136, 1),
                         fontWeight: FontWeight.bold,
                       ),
                     ),

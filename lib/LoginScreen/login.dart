@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text("Log In.", style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 56.0,
-                    color: Colors.deepPurple,
+                    color: Color.fromRGBO(3, 201, 136, 1),
                     fontWeight: FontWeight.bold,
                   ),),
                       const SizedBox(
@@ -128,6 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: double.infinity,
                           height: 60,
                           child: FilledButton(
+                            
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   isLoading = true;

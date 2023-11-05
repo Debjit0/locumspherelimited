@@ -2,12 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
+
 import 'package:locumspherelimited/Allocation%20Screen/components/allocation_tile.dart';
 import 'package:locumspherelimited/Models/allocation_model.dart';
-import 'package:locumspherelimited/Profile%20Screen/profile_screen.dart';
-import 'package:locumspherelimited/SplashScreen/splash.dart';
+
 
 class AllocationsSccreen extends StatefulWidget {
   const AllocationsSccreen({super.key});
@@ -37,7 +35,7 @@ class _AllocationsSccreenState extends State<AllocationsSccreen> {
               return Text("Loading");
             }
 
-            if (snapshot.data!.docs.length != 0) {
+            if (snapshot.data!.docs.length == 0) {
               return Container(
                 width: double.infinity,
                 child: Column(
@@ -49,7 +47,7 @@ class _AllocationsSccreenState extends State<AllocationsSccreen> {
                       height: 200,
                     ),
                     Text(
-                      "No Tasks Allocated Today",
+                      "No Allocations Found",
                     )
                   ],
                 ),

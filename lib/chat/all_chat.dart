@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -55,7 +56,22 @@ class _AllChatState extends State<AllChat> {
           }
 
           if (snapshot.data!.docs.length == 0) {
-            return Text("No Data");
+            return Container(
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/images/not_found.svg",
+                      height: 200,
+                    ),
+                    Text(
+                      "No Allocations Found",
+                    )
+                  ],
+                ),
+              );
           }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,

@@ -75,8 +75,10 @@ class _CheckVerifyState extends State<CheckVerify> {
         .get();
     isVerified = document['isverified'];
     accounttype = document["accounttype"];
+    firstname = document['firstname'];
     if (isVerified == true && accounttype == "employee" && firstname != "") {
       conditions = true;
+      setNameSF(firstname);
       return true;
     } else {
       conditions = false;
@@ -87,5 +89,13 @@ class _CheckVerifyState extends State<CheckVerify> {
   Future<String> getNameStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("firstname").toString();
+  }
+
+  setNameSF(String name) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(name);
+    if (name != "") {
+      prefs.setString('firstname', name);
+    }
   }
 }
